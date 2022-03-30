@@ -8,10 +8,19 @@ def format_data(account):
   account_descr = account["description"]
   account_country = account["country"]
   # print(f'{name}: {account["follower_count"]}')
-  return f"{account_name}, a {account_descrdescr}, from {account_country}"
+  return f"{account_name}, a {account_descr}, from {account_country}"
+
+def check_answer(guess, a_followers, b_followers):
+  """Take users guess  and followers to check if user is right"""
+  if a_followers > b_followers:
+    return guess == "a"
+  else:
+    return guess == "b"
 
 # Display game art
 print(logo)
+# Keep score for player
+score = 0
 
 # Generate random account from game data
 option_a = random.choice(data)
@@ -24,12 +33,22 @@ print(vs)
 print(f"Against B: {format_data(option_b)}.")
 
 # Ask user for input
-input("Who has more followers A or B?: ")
+guess = input("Who has more followers 'A' or 'B': ").lower()
 
 # Get number of followers 
+a_followers = option_a["follower_count"]
+b_followers = option_b["follower_count"]
+
+is_correct = check_answer(guess, a_followers, b_followers)
+
 # Check if users input answer is correct
 # Give user feedback on answer
-# Keep score for player
+if is_correct:
+  score += 1
+  print(f"You're right. Current score: {score}")
+else:
+  print(f"Sorry you lose. Final score: {score}")
+
 # Make the game repeatable
 # Make account B replaced account A on next round
 # Make screen clear better next round
